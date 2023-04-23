@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <h3 class="text-center custom-font">Listado de peliculas</h3>
+    <div class="row bg-dark text-light text-center">
+        <div class="col-sm border d-none">
+            <h3 class="custom-font-headers">Id</h3>
+        </div>
+        <div class="col-sm-3 border">
+            <h3 class="custom-font-headers">Nombre</h3>
+        </div>
+        <div class="col-sm-3 border">
+            <h3 class="custom-font-headers">Categoría</h3>
+        </div>
+        <div class="col-sm-1 border">
+            <h3 class="custom-font-headers">Estreno</h3>
+        </div>
+        <div class="col-sm-1 border">
+            <h3 class="custom-font-headers">Público</h3>
+        </div>
+        <div class="col-sm-4 border">
+            <h3 class="custom-font-headers">Foto</h3>
+        </div>
+    </div>
+    <div *ngFor="let item of listado" class="row custom-pointer" (click)="seleccionDeFila(item)"
+        [class.fila-seleccionada]="filaSeleccionada != null && item.id === filaSeleccionada.id">
+        <div class="col-sm border d-none">
+            {{item.id}}
+        </div>
+        <div class="col-sm-3 border custom-font-data">
+            {{item.nombre}}
+        </div>
+        <div class="col-sm-3 border custom-font-data">
+            {{obtenerTipoPeliculaString(item)}}
+        </div>
+        <div class="col-sm-1 border custom-font-data">
+            {{obtenerFechaString(item)}}
+        </div>
+        <div class="col-sm-1 border custom-font-data text-right">
+            {{item.cantidadPublico}}
+        </div>
+        <div class="col-sm-4 border custom-font-data">
+            <img [src]="item.rutaFoto" alt="Imagen no disponible">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="container-fluid p-0">
+    <div class="">
+        <app-tabla-pelicula (OnPeliculaSeleccionada)="obtenerPeliculaSeleccionada($event)"></app-tabla-pelicula>
+    </div>
+    <div class="row my-3">
+        <div class="col-sm text-center">futuro componente</div>
+        <div class="col-sm">
+            <app-detalle-pelicula [pelicula]="peliculaSeleccionada" ></app-detalle-pelicula>
+        </div>
+        <div class="col-sm text-center">Futuro componente</div>
+    </div>    
+</div>
