@@ -3,40 +3,44 @@
     <form class="form-group">
         <div>
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-control" (input)="inputChange()" name="nombre" [(ngModel)]="nombre">
+            <input type="text" id="nombre" class="form-control" (input)="inputChange()" name="nombre"
+                [(ngModel)]="nombre">
             <div *ngIf="mensajeNombre !== ''">
                 <p class="mensaje-error">{{mensajeNombre}}</p>
             </div>
         </div>
         <div>
             <label for="tipoPelicula" class="form-label">Tipo de Película</label>
-            <select class="form-control" (change)="inputChange()" name="tipoPelicula" id="tipoPelicula" [(ngModel)]="tipoPelicula">
+            <select class="form-control" (change)="inputChange()" name="tipoPelicula" id="tipoPelicula"
+                [(ngModel)]="tipoPelicula">
                 <option *ngFor="let tipoDePelicula of tiposDePelicula" value="{{tipoDePelicula.value}}">
-{{tipoDePelicula.text}}
+                    {{tipoDePelicula.text}}
                 </option>
-            </select>          
+            </select>
             <div *ngIf="mensajeTipoPelicula !== ''">
                 <p class="mensaje-error">{{mensajeTipoPelicula}}</p>
             </div>
         </div>
         <div>
             <label for="fechaEstreno" class="form-label">Fecha de Estreno</label>
-            <input type="date" id="fechaEstreno" class="form-control" (input)="inputChange()" name="fechaEstreno" [(ngModel)]="fechaEstreno">
+            <input type="date" id="fechaEstreno" class="form-control" (input)="inputChange()" name="fechaEstreno"
+                [(ngModel)]="fechaEstreno">
             <div *ngIf="mensajeFechaEstreno !== ''">
                 <p class="mensaje-error">{{mensajeFechaEstreno}}</p>
             </div>
         </div>
         <div>
             <label for="cantidadDePublico" class="form-label">Cantidad de público</label>
-            <input type="number" id="cantidadDePublico" (input)="inputChange()" class="form-control" [(ngModel)]="cantidadDePublico"
-                name="cantidadDePublico">
+            <input type="number" id="cantidadDePublico" (input)="inputChange()" class="form-control"
+                [(ngModel)]="cantidadDePublico" name="cantidadDePublico">
             <div *ngIf="mensajeCantidadPublico !== ''">
                 <p class="mensaje-error">{{mensajeCantidadPublico}}</p>
             </div>
         </div>
         <div>
             <label for="foto" class="form-label">Foto</label>
-            <input type="file" class="form-control" name="foto" id="foto" accept="image/jpeg" [multiple]="false" (change)="inputChange($event)">
+            <input type="file" class="form-control" name="foto" id="foto" accept="image/jpeg" [multiple]="false"
+                (change)="inputChange($event)">
             <div *ngIf="mensajeFoto !== ''">
                 <p class="mensaje-error">{{mensajeFoto}}</p>
             </div>

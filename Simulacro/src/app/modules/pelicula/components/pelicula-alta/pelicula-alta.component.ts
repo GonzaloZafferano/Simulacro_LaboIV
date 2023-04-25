@@ -37,32 +37,57 @@ export class PeliculaAltaComponent {
     if (!errorEnDatos) {
       let peliculas = this.peliculasService.obtenerPeliculas();
 
-      let ultimoId = peliculas.length > 0 ?  Math.max(...peliculas.map(obj => obj.id)) : 0;
+      let ultimoId = peliculas.length > 0 ? Math.max(...peliculas.map(obj => obj.id)) : 0;
 
-      this.obtenerBase64String()
-        .then(x => {
-          let pelicula = new Pelicula();
-          pelicula.id = ++ultimoId;
-          pelicula.nombre = this.nombre;
-          pelicula.tipoPelicula = Number(this.tipoPelicula);
-         //pelicula.rutaFoto = this.foto;
-          pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
-          pelicula.cantidadPublico = Number(this.cantidadDePublico);
-          peliculas.push(pelicula);
-          this.peliculasService.cargarPeliculas(peliculas);
+      let pelicula = new Pelicula();
+      pelicula.id = ++ultimoId;
+      pelicula.nombre = this.nombre;
+      pelicula.tipoPelicula = Number(this.tipoPelicula);
+      pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
+      pelicula.cantidadPublico = Number(this.cantidadDePublico);
+      pelicula.rutaFoto = this.foto;
 
-          Swal.fire({
-            title: 'Alta exitosa!',
-            text: `Se ha guardado la pelicula '${pelicula.nombre}'`,
-            icon: 'success',
-            timer : 0,
-            confirmButtonText: 'Aceptar'
-          });  
+      peliculas.push(pelicula);
+      this.peliculasService.cargarPeliculas(peliculas);
 
-          this.limpiarFormulario();
-        })
-        .catch(err => console.error(err));
+      Swal.fire({
+        title: 'Alta exitosa!',
+        text: `Se ha guardado la pelicula '${pelicula.nombre}'`,
+        icon: 'success',
+        timer: 0,
+        confirmButtonText: 'Aceptar'
+      });
+
+      this.limpiarFormulario();
     }
+  }
+
+
+  inputChange(event: any = null) {
+    if (this.nombre != '')
+      this.mensajeNombre = "";
+
+    if (this.cantidadDePublico != null && this.cantidadDePublico >= 1)
+      this.mensajeCantidadPublico = "";
+
+    if (this.fechaEstreno != '')
+      this.mensajeFechaEstreno = "";
+
+    if (this.tipoPelicula != '' && this.tipoPelicula != '-1')
+      this.mensajeTipoPelicula = "";
+
+    if (event != null && event.target.matches("[type=file]")) {
+      this.inputArchivo = event.target;
+      let hayError = this.validarImagen(event);
+      if (!hayError) {
+        this.obtenerUrlDeImagen(event);
+      }
+      else
+        this.foto = '';
+    }
+
+    if (this.foto != '')
+      this.mensajeFoto = '';
   }
 
   validarInputs(event: any = null) {
@@ -110,32 +135,14 @@ export class PeliculaAltaComponent {
     return errorConArchivo;
   }
 
-  inputChange(event: any = null) {
-    if (this.nombre != '')
-      this.mensajeNombre = "";
+  obtenerUrlDeImagen(event: any) {
+    let file = event.target.files[0];
+    let reader = new FileReader();
 
-    if (this.cantidadDePublico != null && this.cantidadDePublico >= 1)
-      this.mensajeCantidadPublico = "";
-
-    if (this.fechaEstreno != '')
-      this.mensajeFechaEstreno = "";
-
-    if (this.tipoPelicula != '' && this.tipoPelicula != '-1')
-      this.mensajeTipoPelicula = "";
-
-    if (event != null && event.target.matches("[type=file]")) {
-      this.inputArchivo = event.target;
-      let hayError = this.validarImagen(event);
-      if (!hayError) {
-        this.foto = event.target.files[0].name;
-        this.archivoDeFoto = event.target.files[0];
-      }
-      else
-        this.foto = '';
-    }
-
-    if (this.foto != '')
-      this.mensajeFoto = '';
+    reader.onload = (e: any) => {
+      this.foto = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   limpiarMensajes() {
@@ -160,18 +167,5 @@ export class PeliculaAltaComponent {
   limpiarFormulario() {
     this.limpiarInputs();
     this.limpiarMensajes();
-  }
-
-  obtenerBase64String() {
-    let file = this.archivoDeFoto;
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result?.toString().substr(reader.result.toString().indexOf(',') + 1));
-      reader.onerror = error => reject(error);
-    })
-      .then(x => {
-        this.foto = x as string;
-      })
   }
 }
