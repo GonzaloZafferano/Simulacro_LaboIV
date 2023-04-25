@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { PeliculasService } from '../services/peliculas/peliculas.service';
-import { Pelicula, TipoPelicula } from '../models/Pelicula';
+import { PeliculasService } from '../../services/peliculas/peliculas.service';
+import { Pelicula} from '../../models/Pelicula';
 
 @Component({
   selector: 'app-busqueda',

@@ -1,3 +1,5 @@
+import { TipoPelicula } from "./TipoPelicula";
+
 export class Pelicula {
     id: number;
     nombre: string;
@@ -5,11 +7,4 @@ export class Pelicula {
     fechaDeEstreno: Date;
     cantidadPublico: number;
     rutaFoto: string;
-}
-
-export enum TipoPelicula {
-    terror,
-    comedia,
-    amor,
-    otros
 }

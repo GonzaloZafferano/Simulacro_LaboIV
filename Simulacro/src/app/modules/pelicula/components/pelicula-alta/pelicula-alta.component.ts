@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Pelicula, TipoPelicula } from 'src/app/models/Pelicula';
-import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { Pelicula } from 'src/app/models/Pelicula';
+import { TipoPelicula } from 'src/app/models/TipoPelicula';
 import { PeliculasService } from 'src/app/services/peliculas/peliculas.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pelicula-alta',
@@ -49,6 +50,15 @@ export class PeliculaAltaComponent {
           pelicula.cantidadPublico = Number(this.cantidadDePublico);
           peliculas.push(pelicula);
           this.peliculasService.cargarPeliculas(peliculas);
+
+          Swal.fire({
+            title: 'Alta exitosa!',
+            text: `Se ha guardado la pelicula '${pelicula.nombre}'`,
+            icon: 'success',
+            timer : 0,
+            confirmButtonText: 'Aceptar'
+          });  
+
           this.limpiarFormulario();
         })
         .catch(err => console.error(err));

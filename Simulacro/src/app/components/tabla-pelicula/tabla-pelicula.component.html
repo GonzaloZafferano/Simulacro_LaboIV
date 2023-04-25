@@ -7,16 +7,16 @@
         <div class="col-sm-3 border">
             <h3 class="custom-font-headers">Nombre</h3>
         </div>
-        <div class="col-sm-3 border">
+        <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Categoría</h3>
         </div>
-        <div class="col-sm-1 border">
+        <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Estreno</h3>
         </div>
-        <div class="col-sm-1 border">
+        <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Público</h3>
         </div>
-        <div class="col-sm-4 border">
+        <div class="col-sm-3 border">
             <h3 class="custom-font-headers">Foto</h3>
         </div>
     </div>
@@ -28,16 +28,16 @@
         <div class="col-sm-3 border custom-font-data">
             {{item.nombre}}
         </div>
-        <div class="col-sm-3 border custom-font-data">
+        <div class="col-sm-2 border custom-font-data">
             {{obtenerTipoPeliculaString(item)}}
         </div>
-        <div class="col-sm-1 border custom-font-data">
+        <div class="col-sm-2 border custom-font-data">
             {{obtenerFechaString(item)}}
         </div>
-        <div class="col-sm-1 border custom-font-data text-right">
+        <div class="col-sm-2 border custom-font-data text-right">
             {{item.cantidadPublico}}
         </div>
-        <div class="col-sm-4 border custom-font-data">
+        <div class="col-sm-3 border custom-font-data">
             <img [src]="item.rutaFoto" alt="Imagen no disponible">
         </div>
     </div>

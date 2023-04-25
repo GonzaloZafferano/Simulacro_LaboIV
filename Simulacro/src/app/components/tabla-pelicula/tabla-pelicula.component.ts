@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Pelicula, TipoPelicula } from '../models/Pelicula';
-import { PeliculasService } from '../services/peliculas/peliculas.service';
+import { Pelicula} from '../../models/Pelicula';
+import { PeliculasService } from '../../services/peliculas/peliculas.service';
 
 @Component({
   selector: 'app-tabla-pelicula',

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Pelicula, TipoPelicula } from './models/Pelicula';
 
 @Component({
   selector: 'app-root',
