@@ -20,25 +20,31 @@
             <h3 class="custom-font-headers">Foto</h3>
         </div>
     </div>
-    <div *ngFor="let item of listado" class="row custom-pointer" (click)="seleccionDeFila(item)"
-        [class.fila-seleccionada]="filaSeleccionada != null && item.id === filaSeleccionada.id">
-        <div class="col-sm border d-none">
-            {{item.id}}
-        </div>
-        <div class="col-sm-3 border custom-font-data">
-            {{item.nombre}}
-        </div>
-        <div class="col-sm-2 border custom-font-data">
-            {{obtenerTipoPeliculaString(item)}}
-        </div>
-        <div class="col-sm-2 border custom-font-data">
-            {{obtenerFechaString(item)}}
-        </div>
-        <div class="col-sm-2 border custom-font-data text-right">
-            {{item.cantidadPublico}}
-        </div>
-        <div class="col-sm-3 border custom-font-data">
-            <img [src]="item.rutaFoto" alt="Imagen no disponible">
-        </div>
+    <div *ngIf="spinner; else lista" class="d-flex justify-content-center">
+        <span class="m-3 fs-3 fw-bold">Cargando...</span>
+        <div class="spinner-border text-danger" style="align-self: center; scale: 1.2;"></div>
     </div>
+    <ng-template #lista>
+        <div *ngFor="let item of listado" class="row custom-pointer" (click)="seleccionDeFila(item)"
+            [class.fila-seleccionada]="filaSeleccionada != null && item.id === filaSeleccionada.id">
+            <div class="col-sm border d-none">
+                {{item.id}}
+            </div>
+            <div class="col-sm-3 border custom-font-data">
+                {{item.nombre}}
+            </div>
+            <div class="col-sm-2 border custom-font-data">
+                {{obtenerTipoPeliculaString(item)}}
+            </div>
+            <div class="col-sm-2 border custom-font-data">
+                {{obtenerFechaString(item)}}
+            </div>
+            <div class="col-sm-2 border custom-font-data text-right">
+                {{item.cantidadPublico}}
+            </div>
+            <div class="col-sm-3 border custom-font-data">
+                <img [src]="item.rutaFoto" alt="Imagen no disponible">
+            </div>
+        </div>
+    </ng-template>
 </div>

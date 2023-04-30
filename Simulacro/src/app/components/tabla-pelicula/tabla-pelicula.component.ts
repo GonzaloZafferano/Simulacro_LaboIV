@@ -12,15 +12,20 @@ export class TablaPeliculaComponent implements OnInit {
   @Output() OnPeliculaSeleccionada = new EventEmitter<Pelicula>();
   filaSeleccionada: any;
   listado: any[] = [];
+  spinner : boolean = false;
   constructor(private peliculasService: PeliculasService) { }
 
   ngOnInit(): void {
+    
     this.obtenerPeliculas();
+
   }
 
   async obtenerPeliculas() {
+    this.spinner = true;
     //this.listado = this.peliculasService.obtenerPeliculas();
     this.listado = await this.peliculasService.obtenerListaDePeliculasDB();
+    this.spinner = false;
   }
 
   obtenerFechaString(pelicula: Pelicula) {
