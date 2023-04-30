@@ -4,7 +4,7 @@ export class Pelicula {
     id: number;
     nombre: string;
     tipoPelicula: TipoPelicula;
-    fechaDeEstreno: Date;
+    fechaDeEstreno: any;
     cantidadPublico: number;
     rutaFoto: string;
 }

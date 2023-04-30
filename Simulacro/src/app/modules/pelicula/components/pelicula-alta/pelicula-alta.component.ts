@@ -35,33 +35,55 @@ export class PeliculaAltaComponent {
   guardar() {
     let errorEnDatos = this.validarInputs();
     if (!errorEnDatos) {
-      let peliculas = this.peliculasService.obtenerPeliculas();
 
-      let ultimoId = peliculas.length > 0 ? Math.max(...peliculas.map(obj => obj.id)) : 0;
+      //LOCAL STORAGE
+      // let peliculas = this.peliculasService.obtenerPeliculas();
 
+      // let ultimoId = peliculas.length > 0 ? Math.max(...peliculas.map(obj => obj.id)) : 0;
+
+      // let pelicula = new Pelicula();
+      // pelicula.id = ++ultimoId;
+      // pelicula.nombre = this.nombre;
+      // pelicula.tipoPelicula = Number(this.tipoPelicula);
+      // pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
+      // pelicula.cantidadPublico = Number(this.cantidadDePublico);
+      // pelicula.rutaFoto = this.foto;
+
+      // peliculas.push(pelicula);
+      // this.peliculasService.cargarPeliculas(peliculas);
+
+      //FIRESTORE
       let pelicula = new Pelicula();
-      pelicula.id = ++ultimoId;
       pelicula.nombre = this.nombre;
       pelicula.tipoPelicula = Number(this.tipoPelicula);
       pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
       pelicula.cantidadPublico = Number(this.cantidadDePublico);
       pelicula.rutaFoto = this.foto;
+      
+      this.peliculasService.cargarPeliculaDB(pelicula)
+        .then(x => {
+          Swal.fire({
+            title: 'Alta exitosa!',
+            text: `Se ha guardado la pelicula '${pelicula.nombre}'`,
+            icon: 'success',
+            timer: 0,
+            confirmButtonText: 'Aceptar'
+          });
+          this.limpiarFormulario();
 
-      peliculas.push(pelicula);
-      this.peliculasService.cargarPeliculas(peliculas);
-
-      Swal.fire({
-        title: 'Alta exitosa!',
-        text: `Se ha guardado la pelicula '${pelicula.nombre}'`,
-        icon: 'success',
-        timer: 0,
-        confirmButtonText: 'Aceptar'
-      });
-
-      this.limpiarFormulario();
+        })
+        .catch(err => {
+          console.log(err);        
+          Swal.fire({
+            title: 'Ha ocurrido un error!',
+            text: `Ha ocurrido un error al intentar guardar: '${err}'`,
+            icon: 'error',
+            timer: 0,
+            confirmButtonText: 'Aceptar'
+          });
+        })
     }
   }
-
 
   inputChange(event: any = null) {
     if (this.nombre != '')
@@ -75,7 +97,7 @@ export class PeliculaAltaComponent {
 
     if (this.tipoPelicula != '' && this.tipoPelicula != '-1')
       this.mensajeTipoPelicula = "";
-
+      
     if (event != null && event.target.matches("[type=file]")) {
       this.inputArchivo = event.target;
       let hayError = this.validarImagen(event);
@@ -139,8 +161,9 @@ export class PeliculaAltaComponent {
     let file = event.target.files[0];
     let reader = new FileReader();
 
-    reader.onload = (e: any) => {
+    reader.onload = (e: any) => {     
       this.foto = e.target.result;
+      this.mensajeFoto = '';
     };
     reader.readAsDataURL(file);
   }

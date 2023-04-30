@@ -11,15 +11,16 @@ import { PeliculasService } from '../../services/peliculas/peliculas.service';
 export class TablaPeliculaComponent implements OnInit {
   @Output() OnPeliculaSeleccionada = new EventEmitter<Pelicula>();
   filaSeleccionada: any;
-  listado: Pelicula[] = [];
+  listado: any[] = [];
   constructor(private peliculasService: PeliculasService) { }
 
   ngOnInit(): void {
     this.obtenerPeliculas();
   }
 
-  obtenerPeliculas() {
-    this.listado = this.peliculasService.obtenerPeliculas();
+  async obtenerPeliculas() {
+    //this.listado = this.peliculasService.obtenerPeliculas();
+    this.listado = await this.peliculasService.obtenerListaDePeliculasDB();
   }
 
   obtenerFechaString(pelicula: Pelicula) {

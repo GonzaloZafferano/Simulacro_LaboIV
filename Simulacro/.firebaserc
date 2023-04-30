@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "examen-labo4": {
+      "hosting": {
+        "Simulacro": [
+          "examen-labo4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "examen-labo4"
+  }
+}
