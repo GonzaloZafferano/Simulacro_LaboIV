@@ -46,8 +46,10 @@
             </div>
         </div>
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-outline-light m-2" (click)="limpiarFormulario()">Limpiar</button>
-            <button type="button" class="btn btn-outline-light m-2" (click)="guardar()">Guardar</button>         
+            <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2" (click)="limpiarFormulario()">Limpiar</button>
+            <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2" (click)="guardar()">Guardar
+                <span [hidden]="!guardando" class="spinner-border spinner-border-sm"></span>
+            </button>         
         </div>
     </form>
 </div>

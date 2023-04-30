@@ -19,6 +19,8 @@ export class PeliculaAltaComponent {
   foto: string = '';
   archivoDeFoto: File;
   inputArchivo: any;
+  guardando: boolean = false;
+
 
   tiposDePelicula: any = [];
   mensajeNombre: string = '';
@@ -59,7 +61,8 @@ export class PeliculaAltaComponent {
       pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
       pelicula.cantidadPublico = Number(this.cantidadDePublico);
       pelicula.rutaFoto = this.foto;
-      
+
+      this.guardando = true;
       this.peliculasService.cargarPeliculaDB(pelicula)
         .then(x => {
           Swal.fire({
@@ -70,10 +73,10 @@ export class PeliculaAltaComponent {
             confirmButtonText: 'Aceptar'
           });
           this.limpiarFormulario();
-
+          this.guardando = false;
         })
         .catch(err => {
-          console.log(err);        
+          console.log(err);
           Swal.fire({
             title: 'Ha ocurrido un error!',
             text: `Ha ocurrido un error al intentar guardar: '${err}'`,
@@ -81,6 +84,7 @@ export class PeliculaAltaComponent {
             timer: 0,
             confirmButtonText: 'Aceptar'
           });
+          this.guardando = false;
         })
     }
   }
@@ -97,7 +101,7 @@ export class PeliculaAltaComponent {
 
     if (this.tipoPelicula != '' && this.tipoPelicula != '-1')
       this.mensajeTipoPelicula = "";
-      
+
     if (event != null && event.target.matches("[type=file]")) {
       this.inputArchivo = event.target;
       let hayError = this.validarImagen(event);
@@ -161,7 +165,7 @@ export class PeliculaAltaComponent {
     let file = event.target.files[0];
     let reader = new FileReader();
 
-    reader.onload = (e: any) => {     
+    reader.onload = (e: any) => {
       this.foto = e.target.result;
       this.mensajeFoto = '';
     };

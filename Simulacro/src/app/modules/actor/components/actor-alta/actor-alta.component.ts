@@ -25,6 +25,7 @@ export class ActorAltaComponent {
   mensajeNacionalidad: string = '';
   mensajeFechaNacimiento: string = '';
   mensajeCantidadPeliculas: string = '';
+  guardando: boolean = false;
 
   //foto: string = '';
   //archivoDeFoto: File;
@@ -62,6 +63,8 @@ export class ActorAltaComponent {
       actor.fechaNacimiento = new Date(this.fechaNacimiento);
       actor.cantidadPeliculas = Number(this.cantidadPeliculas);
 
+      this.guardando = true;
+
       this.actorService.cargarActoraDB(actor)
         .then(x => {
           Swal.fire({
@@ -72,6 +75,8 @@ export class ActorAltaComponent {
             confirmButtonText: 'Aceptar'
           });
           this.limpiarFormulario();
+          this.guardando = false;
+
         })
         .catch(err => {
           console.log(err);
@@ -82,6 +87,8 @@ export class ActorAltaComponent {
             timer: 0,
             confirmButtonText: 'Aceptar'
           });
+          this.guardando = false;
+
         })
     }
   }
