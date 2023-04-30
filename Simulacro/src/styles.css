@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+.toast-custom {
+    /* left: 100%;*/
+    /* transform: translateX(50%);*/
+    /*width: 200px;*/
+    /* margin: 100px;*/
+    /*ACTUA RARO, SE ACHICA TODO CON TAL DE NO TOCAR EL MARGEN, EN LUGAR DE ALEJARSE DE ESE MARGEN*/
+    background-color: #201f1f;
+    color: #ffffff;
+    font-size: 1.05em;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 20px;
+    margin: 5px; /*Aplica EFECTIVAMENTE el margin entre TOASTS*/
+}
+
+.toast-top-full-width {
+    /* width: 200px;*/
+    /* text-align: center;*/
+    /*margin: 50px;*/
+    margin: 5px; /*No aplica entre TOASTS*/
+    width: 200px;
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    z-index: 9999;
+}
