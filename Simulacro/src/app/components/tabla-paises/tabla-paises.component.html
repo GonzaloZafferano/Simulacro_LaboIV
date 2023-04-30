@@ -1,0 +1,10 @@
+<div class="border p-2">
+
+    <h3>Países</h3>
+    <div *ngFor="let pais of listaPaises">
+    <div class="d-flex justify-content-between m-2 mx-0 border bg-light text-dark paises" (click)="paisSeleccionado(pais.nombre)"> 
+        <p class="m-2">{{pais.nombre}}</p>
+        <img [src]="pais.ruta">
+    </div>
+</div>
+</div>

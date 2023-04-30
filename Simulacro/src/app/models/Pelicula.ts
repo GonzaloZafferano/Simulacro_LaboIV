@@ -1,7 +1,7 @@
 import { TipoPelicula } from "./TipoPelicula";
 
 export class Pelicula {
-    id: number;
+    id: string;
     nombre: string;
     tipoPelicula: TipoPelicula;
     fechaDeEstreno: any;

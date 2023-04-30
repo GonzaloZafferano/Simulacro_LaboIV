@@ -17,6 +17,7 @@ import { TablaPeliculaComponent } from './components/tabla-pelicula/tabla-pelicu
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { TablaPaisesComponent } from './components/tabla-paises/tabla-paises.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
     ActorAltaComponent,
     ActorListadoComponent,
     TablaPeliculaComponent,
-    DetallePeliculaComponent
+    DetallePeliculaComponent,
+    TablaPaisesComponent,
   ],
   imports: [
     BrowserModule,
