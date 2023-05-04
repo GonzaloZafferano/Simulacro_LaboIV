@@ -8,14 +8,23 @@ import { HttpClient } from '@angular/common/http'; //El HttpClientModule se DEBE
 })
 export class TablaPaisesComponent {
   constructor(private http: HttpClient) { }
-@Input() estilos : any ;
+  spinner: boolean = true;
+  @Input() anchoSpinner: string = '';
+  @Input() estilos: any;
   @Output() OnPaisSeleccionado = new EventEmitter<string>();
   paises: any[] = [];
+  suscripcion: any;
   ngOnInit() {
-    let r = this.http.get<any[]>('https://restcountries.com/v2/all?lang=es').subscribe(x => {
+    this.suscripcion = this.http.get<any[]>('https://restcountries.com/v2/all?lang=es').subscribe(x => {
       this.paises = x;
-
+      this.spinner = false;
     });
+  }
+
+  ngOnDestroy() {
+    if (this.suscripcion) {
+      this.suscripcion.unsubscribe();
+    }
   }
   // listaPaises: any[] = [
   //   {
