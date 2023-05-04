@@ -20,6 +20,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { TablaPaisesComponent } from './components/tabla-paises/tabla-paises.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http'; //PARA USAR HTTP. El uso esta en tabla-paises
 
 @NgModule({
   declarations: [
@@ -41,7 +42,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    HttpClientModule //PARA USAR HTTP. El uso esta en tabla-paises
+
   ],
   providers: [],
   bootstrap: [AppComponent]
