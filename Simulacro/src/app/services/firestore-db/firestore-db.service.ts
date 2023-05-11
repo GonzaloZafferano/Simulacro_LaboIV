@@ -37,7 +37,7 @@ export class FirestoreDBService {
 
   modificarObjeto(nombreColeccion: string, objetoAModificar: any) {
     const coleccion: CollectionReference<DocumentData> = collection(this.firestore, nombreColeccion);
-    const documentoOriginal: DocumentReference<DocumentData> = doc(objetoAModificar.id);
+    const documentoOriginal: DocumentReference<DocumentData> = doc(coleccion, objetoAModificar.id);
     return updateDoc(documentoOriginal, { ...objetoAModificar });
   }
 
