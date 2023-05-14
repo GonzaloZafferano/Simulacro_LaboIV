@@ -1,0 +1,21 @@
+<ng-container>
+    <div *ngIf="spinner; else lista" class="d-flex justify-content-around" [style]="anchoSpinner">
+        <span class="fs-3 fw-bold">Cargando...</span>
+        <div class="spinner-border text-danger text-center" style="align-self: center; scale: 1.2;"></div>
+    </div>
+    <ng-template #lista>
+        <!-- <div style="height: 500px !important; width: 270px; overflow-y: scroll;"> -->
+        <div *ngIf="peliculas" style="height: 100% !important;" class="card">
+            <div class="card-header bg-dark text-light">
+                <h3 class="card-title">Películas</h3>
+            </div>
+            <div class="card-body" [style]="estilos">
+                <ul class="list-group m-0 p-0" *ngFor="let pelicula of peliculas">
+                    <li class="list-group-item bordes">
+                        <p class="card-text m-2">{{pelicula.nombre}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </ng-template>
+</ng-container>

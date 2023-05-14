@@ -42,24 +42,4 @@ export class PeliculasService {
   eliminarPeliculaDB(id: string) {
     return this.firestoreDB.eliminarObjeto(this.nombreLista, id);
   }
-
-  obtenerFechaString(pelicula: Pelicula, aaaaMMdd: boolean = false) {
-    let fecha = pelicula.fechaDeEstreno.toDate();// new Date(pelicula.fechaDeEstreno);
-  
-    let dia = fecha.getDate() + 1;
-    let mes = fecha.getMonth() + 1;
-    let anio = fecha.getFullYear();
-
-    let cadenaDia = dia < 10 ? '0' + dia.toString() : dia.toString();
-    let cadenaMes = mes < 10 ? '0' + mes.toString() : mes.toString();
-
-    if (aaaaMMdd)
-      return anio.toString() + '-' + cadenaMes + '-' + cadenaDia;
-
-    return cadenaDia + '-' + cadenaMes + '-' + anio.toString();
-  }
-
-  obtenerTipoPeliculaString(pelicula: Pelicula) {
-    return TipoPelicula[pelicula.tipoPelicula];
-  }
 }

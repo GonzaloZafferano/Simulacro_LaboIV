@@ -11,12 +11,18 @@ export class TablaPaisesComponent {
   spinner: boolean = true;
   @Input() anchoSpinner: string = '';
   @Input() estilos: any;
-  @Output() OnPaisSeleccionado = new EventEmitter<string>();
+  @Output() OnPaisSeleccionado = new EventEmitter<any>();
   paises: any[] = [];
   suscripcion: any;
-  ngOnInit() {
-    this.suscripcion = this.http.get<any[]>('https://restcountries.com/v2/all?lang=es').subscribe(x => {
-      this.paises = x;
+  ngOnInit() {                              
+    this.suscripcion = this.http.get<any[]>('https://restcountries.com/v2/all?').subscribe(x => {
+      this.paises = x.sort((x,y)=>{
+        if (x.translations.es < y.translations.es) 
+          return -1;        
+        if (x.translations.es > y.translations.es) 
+          return 1;        
+        return 0;
+      }); 
       this.spinner = false;
     });
   }
@@ -26,24 +32,6 @@ export class TablaPaisesComponent {
       this.suscripcion.unsubscribe();
     }
   }
-  // listaPaises: any[] = [
-  //   {
-  //     nombre: 'Argentina',
-  //     ruta: 'assets/banderas/Arg.png'
-  //   },
-  //   {
-  //     nombre: 'Brasil',
-  //     ruta: 'assets/banderas/Brasil.png'
-  //   },
-  //   {
-  //     nombre: 'España',
-  //     ruta: 'assets/banderas/Esp.png'
-  //   },
-  //   {
-  //     nombre: 'Estados Unidos',
-  //     ruta: 'assets/banderas/Usa.png'
-  //   }
-  // ];
 
   paisSeleccionado(pais: string) {
     this.OnPaisSeleccionado.emit(pais);

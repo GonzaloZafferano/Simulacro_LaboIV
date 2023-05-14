@@ -1,55 +1,69 @@
-<div class="container bg-dark text-light my-2">
-    <h3 class="text-center">Alta película</h3>
-    <form class="form-group">
-        <div>
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-control" (input)="inputChange()" name="nombre"
-                [(ngModel)]="nombre">
-            <div *ngIf="mensajeNombre !== ''">
-                <p class="mensaje-error">{{mensajeNombre}}</p>
+<h3 class="text-center custom-font">Alta película</h3> 
+<div class="container bg-dark text-light my-2 d-flex justify-content-center">
+    <div class="mr-5 mt-2 w-50">
+        <form class="form-group">
+            <div>
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" class="form-control" (input)="inputChange()" name="nombre"
+                    [(ngModel)]="nombre">
+                <div *ngIf="mensajeNombre !== ''">
+                    <p class="mensaje-error">{{mensajeNombre}}</p>
+                </div>
             </div>
-        </div>
-        <div>
-            <label for="tipoPelicula" class="form-label">Tipo de Película</label>
-            <select class="form-control" (change)="inputChange()" name="tipoPelicula" id="tipoPelicula"
-                [(ngModel)]="tipoPelicula">
-                <option *ngFor="let tipoDePelicula of tiposDePelicula" value="{{tipoDePelicula.value}}">
-                    {{tipoDePelicula.text}}
-                </option>
-            </select>
-            <div *ngIf="mensajeTipoPelicula !== ''">
-                <p class="mensaje-error">{{mensajeTipoPelicula}}</p>
+            <div>
+                <label for="tipoPelicula" class="form-label">Tipo de Película</label>
+                <select class="form-control" (change)="inputChange()" name="tipoPelicula" id="tipoPelicula"
+                    [(ngModel)]="tipoPelicula">
+                    <option *ngFor="let tipoDePelicula of tiposDePelicula" value="{{tipoDePelicula.value}}">
+                        {{tipoDePelicula.text}}
+                    </option>
+                </select>
+                <div *ngIf="mensajeTipoPelicula !== ''">
+                    <p class="mensaje-error">{{mensajeTipoPelicula}}</p>
+                </div>
             </div>
-        </div>
-        <div>
-            <label for="fechaEstreno" class="form-label">Fecha de Estreno</label>
-            <input type="date" id="fechaEstreno" class="form-control" (input)="inputChange()" name="fechaEstreno"
-                [(ngModel)]="fechaEstreno">
-            <div *ngIf="mensajeFechaEstreno !== ''">
-                <p class="mensaje-error">{{mensajeFechaEstreno}}</p>
+            <div>
+                <label for="fechaEstreno" class="form-label">Fecha de Estreno</label>
+                <input type="date" id="fechaEstreno" class="form-control" (input)="inputChange()" name="fechaEstreno"
+                    [(ngModel)]="fechaEstreno">
+                <div *ngIf="mensajeFechaEstreno !== ''">
+                    <p class="mensaje-error">{{mensajeFechaEstreno}}</p>
+                </div>
             </div>
-        </div>
-        <div>
-            <label for="cantidadDePublico" class="form-label">Cantidad de público</label>
-            <input type="number" id="cantidadDePublico" (input)="inputChange()" class="form-control"
-                [(ngModel)]="cantidadDePublico" name="cantidadDePublico">
-            <div *ngIf="mensajeCantidadPublico !== ''">
-                <p class="mensaje-error">{{mensajeCantidadPublico}}</p>
+            <div>
+                <label for="actor" class="form-label">Actor</label>
+                <input disabled="true" id="actor" class="form-control" [ngModel]="actorNombreCompleto" name="actor">
+                <div *ngIf="mensajeActor !== ''">
+                    <p class="mensaje-error">{{mensajeActor}}</p>
+                </div>
             </div>
-        </div>
-        <div>
-            <label for="foto" class="form-label">Foto</label>
-            <input type="file" class="form-control" name="foto" id="foto" accept="image/jpeg" [multiple]="false"
-                (change)="inputChange($event)">
-            <div *ngIf="mensajeFoto !== ''">
-                <p class="mensaje-error">{{mensajeFoto}}</p>
+            <div>
+                <label for="cantidadDePublico" class="form-label">Cantidad de público</label>
+                <input type="number" id="cantidadDePublico" (input)="inputChange()" class="form-control"
+                    [(ngModel)]="cantidadDePublico" name="cantidadDePublico">
+                <div *ngIf="mensajeCantidadPublico !== ''">
+                    <p class="mensaje-error">{{mensajeCantidadPublico}}</p>
+                </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2" (click)="limpiarFormulario()">Limpiar</button>
-            <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2" (click)="guardar()">Guardar
-                <span [hidden]="!guardando" class="spinner-border spinner-border-sm"></span>
-            </button>         
-        </div>
-    </form>
+            <div>
+                <label for="foto" class="form-label">Foto</label>
+                <input type="file" class="form-control" name="foto" id="foto" accept="image/jpeg" [multiple]="false"
+                    (change)="inputChange($event)">
+                <div *ngIf="mensajeFoto !== ''">
+                    <p class="mensaje-error">{{mensajeFoto}}</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2"
+                    (click)="limpiarFormulario()">Limpiar</button>
+                <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2"
+                    (click)="guardar()">Guardar
+                    <span [hidden]="!guardando" class="spinner-border spinner-border-sm"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="ml-5 w-25">
+        <app-tabla-actor estilos="height: 400px !important; overflow-y: auto;" (OnActorSeleccionado)="actorSeleccionado($event)"></app-tabla-actor>
+    </div> 
 </div>

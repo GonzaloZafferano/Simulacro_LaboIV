@@ -1,0 +1,7 @@
+<app-actor-listado (OnActorSeleccionado)="actorSeleccionado($event)"></app-actor-listado>
+
+<div class="d-flex justify-content-around mt-5">
+    <app-peliculas-de-actor [style]="'width: 30vw; height: 260px'" estilos="height: 300px !important; width: 97%; overflow-y: auto;" [peliculas]="peliculas" [spinner]="spinners"></app-peliculas-de-actor>
+    <app-detalles-pais [style]="'width: 30vw; height: 260px'" [pais]="pais" [spinner]="spinners"></app-detalles-pais>
+    <app-detalles-actor [style]="'width: 30vw; height: 260px'" [actor]="actor" [spinner]="spinners"></app-detalles-actor>
+</div>

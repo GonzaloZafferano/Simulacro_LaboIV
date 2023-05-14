@@ -1,3 +1,4 @@
+import { Actor } from "./Actor";
 import { TipoPelicula } from "./TipoPelicula";
 
 export class Pelicula {
@@ -7,4 +8,5 @@ export class Pelicula {
     fechaDeEstreno: any;
     cantidadPublico: number;
     rutaFoto: string;
+    actor : Actor | undefined;
 }

@@ -1,11 +1,14 @@
 <div class="container-fluid">
-    <h3 class="text-center custom-font">Listado de peliculas</h3>
+    <h3 class="text-center custom-font">Listado de películas</h3>
     <div class="row bg-dark text-light text-center">
         <div class="col-sm border d-none">
             <h3 class="custom-font-headers">Id</h3>
         </div>
-        <div class="col-sm-3 border">
+        <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Nombre</h3>
+        </div>
+        <div class="col-sm-2 border">
+            <h3 class="custom-font-headers">Actor</h3>
         </div>
         <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Categoría</h3>
@@ -16,7 +19,7 @@
         <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Público</h3>
         </div>
-        <div class="col-sm-3 border">
+        <div class="col-sm-2 border">
             <h3 class="custom-font-headers">Foto</h3>
         </div>
     </div>
@@ -30,8 +33,11 @@
             <div class="col-sm border d-none">
                 {{item.id}}
             </div>
-            <div class="col-sm-3 border custom-font-data">
+            <div class="col-sm-2 border custom-font-data">
                 {{item.nombre}}
+            </div>
+            <div class="col-sm-2 border custom-font-data">
+                {{item.actor?.nombre}}
             </div>
             <div class="col-sm-2 border custom-font-data">
                 {{obtenerTipoPeliculaString(item)}}
@@ -42,7 +48,7 @@
             <div class="col-sm-2 border custom-font-data text-right">
                 {{item.cantidadPublico}}
             </div>
-            <div class="col-sm-3 border custom-font-data">
+            <div class="col-sm-2 border custom-font-data">
                 <img [src]="item.rutaFoto" alt="Imagen no disponible">
             </div>
         </div>

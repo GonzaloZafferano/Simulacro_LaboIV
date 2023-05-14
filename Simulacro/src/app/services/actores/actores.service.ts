@@ -11,14 +11,6 @@ export class ActoresService {
   constructor(private localStorage: LocalStorageService, private firestoreDB: FirestoreDBService) {
     this.nombreLista = 'actores';
   }
-  // obtenerActores() {
-  //   let actores = this.localStorage.obtenerItem('actores');
-  //   return actores != null && actores instanceof Array ? actores : [];
-  // }
-
-  // cargarActores(actores: Actor[]) {
-  //   this.localStorage.cargarItem('actores', actores);
-  // }
 
   cargarActoraDB(actor: Actor) {
     return this.firestoreDB.guardarObjeto(this.nombreLista, {... actor});
@@ -38,5 +30,22 @@ export class ActoresService {
 
   eliminarActorDB(id: string) {
     return this.firestoreDB.eliminarObjeto(this.nombreLista, id);
+  }
+
+  
+  obtenerFechaString(actor: Actor, aaaaMMdd: boolean = false) {
+    let fecha = actor.fechaNacimiento.toDate();// new Date(pelicula.fechaDeEstreno);
+  
+    let dia = fecha.getDate() + 1;
+    let mes = fecha.getMonth() + 1;
+    let anio = fecha.getFullYear();
+
+    let cadenaDia = dia < 10 ? '0' + dia.toString() : dia.toString();
+    let cadenaMes = mes < 10 ? '0' + mes.toString() : mes.toString();
+
+    if (aaaaMMdd)
+      return anio.toString() + '-' + cadenaMes + '-' + cadenaDia;
+
+    return cadenaDia + '-' + cadenaMes + '-' + anio.toString();
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Actor } from 'src/app/models/Actor';
 import { Pelicula } from 'src/app/models/Pelicula';
 import { TipoPelicula } from 'src/app/models/TipoPelicula';
 import { PeliculasService } from 'src/app/services/peliculas/peliculas.service';
@@ -20,7 +21,7 @@ export class PeliculaAltaComponent {
   archivoDeFoto: File;
   inputArchivo: any;
   guardando: boolean = false;
-
+  actor? : Actor;
 
   tiposDePelicula: any = [];
   mensajeNombre: string = '';
@@ -28,32 +29,20 @@ export class PeliculaAltaComponent {
   mensajeFechaEstreno: string = '';
   mensajeCantidadPublico: string = '';
   mensajeFoto: string = '';
+  mensajeActor: string = '';
 
-  constructor(private peliculasService: PeliculasService) {
+  public get actorNombreCompleto(){
+    return this.actor != undefined ? this.actor.nombre : '';
+  }
+
+  constructor(private peliculaService: PeliculasService) {
     this.tiposDePelicula = Object.entries(TipoPelicula).filter(e => isNaN(e[0] as any)).map(e => ({ text: e[0], value: e[1] }));
     this.tiposDePelicula.unshift({ text: '', value: -1 });
   }
 
   guardar() {
     let errorEnDatos = this.validarInputs();
-    if (!errorEnDatos) {
-
-      //LOCAL STORAGE
-      // let peliculas = this.peliculasService.obtenerPeliculas();
-
-      // let ultimoId = peliculas.length > 0 ? Math.max(...peliculas.map(obj => obj.id)) : 0;
-
-      // let pelicula = new Pelicula();
-      // pelicula.id = ++ultimoId;
-      // pelicula.nombre = this.nombre;
-      // pelicula.tipoPelicula = Number(this.tipoPelicula);
-      // pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
-      // pelicula.cantidadPublico = Number(this.cantidadDePublico);
-      // pelicula.rutaFoto = this.foto;
-
-      // peliculas.push(pelicula);
-      // this.peliculasService.cargarPeliculas(peliculas);
-
+    if (!errorEnDatos) { 
       //FIRESTORE
       let pelicula = new Pelicula();
       pelicula.nombre = this.nombre;
@@ -61,9 +50,9 @@ export class PeliculaAltaComponent {
       pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
       pelicula.cantidadPublico = Number(this.cantidadDePublico);
       pelicula.rutaFoto = this.foto;
-
+      pelicula.actor = this.actor;
       this.guardando = true;
-      this.peliculasService.cargarPeliculaDB(pelicula)
+      this.peliculaService.cargarPeliculaDB(pelicula)
         .then(x => {
           Swal.fire({
             title: 'Alta exitosa!',
@@ -102,6 +91,9 @@ export class PeliculaAltaComponent {
     if (this.tipoPelicula != '' && this.tipoPelicula != '-1')
       this.mensajeTipoPelicula = "";
 
+    if (this.actor != undefined && this.actor != null)
+      this.mensajeActor = '';
+
     if (event != null && event.target.matches("[type=file]")) {
       this.inputArchivo = event.target;
       let hayError = this.validarImagen(event);
@@ -129,6 +121,10 @@ export class PeliculaAltaComponent {
       errorEnDatos = true;
     }
 
+    if (this.actor == undefined || this.actor == null) {
+      this.mensajeActor = "Debe ingresar un actor.";
+      errorEnDatos = true;
+    }
     if (this.fechaEstreno == '') {
       this.mensajeFechaEstreno = "Debe ingresar una fecha de estreno.";
       errorEnDatos = true;
@@ -178,9 +174,11 @@ export class PeliculaAltaComponent {
     this.mensajeFechaEstreno = '';
     this.mensajeCantidadPublico = '';
     this.mensajeFoto = '';
+    this.mensajeActor = '';
   }
-
+  
   limpiarInputs() {
+    this.actor = undefined;
     this.nombre = '';
     this.tipoPelicula = '-1';
     this.fechaEstreno = '';
@@ -194,5 +192,11 @@ export class PeliculaAltaComponent {
   limpiarFormulario() {
     this.limpiarInputs();
     this.limpiarMensajes();
+  }
+
+  actorSeleccionado(actor: Actor) {
+    if(actor){
+      this.actor = actor;
+    }
   }
 }

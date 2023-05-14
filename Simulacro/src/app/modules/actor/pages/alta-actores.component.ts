@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./alta-actores.component.css']
 })
 export class AltaActoresComponent {
+  public paisSeleccionado : any ;
 
+  tablaPaisesHandler(pais: any) {
+    if (pais != '') {
+      this.paisSeleccionado = pais;  
+    }
+  }
 }

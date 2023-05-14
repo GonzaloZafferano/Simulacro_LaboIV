@@ -1,0 +1,16 @@
+<div>
+    <h3>Lista de Actores</h3>
+    <!-- <div style="height: 400px !important; overflow-y: scroll;"> -->
+        <div [style]="estilos">
+        <div *ngFor="let actor of actores" style="width: 100%;">
+            <div class="actores border bg-light text-dark p-0 m-1" style="height: 55px; border-radius: 10px; width: 95%;"
+                (click)="actorSeleccionado(actor)">
+                <div class="p-1">
+                    <p class="p-0 m-0">{{actor.nombre}} {{actor.apellido}}
+                    <p>
+                        <small class="p-0 m-0"> {{actor.pais.translations.es}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

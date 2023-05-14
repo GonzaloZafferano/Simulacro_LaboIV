@@ -1,13 +1,13 @@
 <div class="container-fluid bg-dark text-light">
     <h3 class="text-center">Detalles de película</h3>
-    <form  class="form-group">
+    <form class="form-group">
         <div class="d-none">
             <label for="id" class="form-label">Id</label>
             <input type="hidden" id="id" name="id" class="form-control" [value]="id" disabled>
         </div>
         <div>
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-control" name="nombre" [value]="nombre" disabled>
+            <input type="text" id="nombre" class="form-control" name="nombre" [(ngModel)]="nombre">
         </div>
         <div>
             <label for="tipoPelicula" class="form-label">Tipo de Película</label>
@@ -18,6 +18,10 @@
             <label for="fechaEstreno" class="form-label">Fecha de Estreno</label>
             <input type="date" id="fechaEstreno" class="form-control" name="fechaEstreno" [value]="fechaEstreno"
                 disabled>
+        </div>
+        <div>
+            <label for="actor" class="form-label">Actor</label>
+            <input type="text" id="actor" class="form-control" name="actor" [value]="nombreActor" disabled>
         </div>
         <div>
             <label for="cantidadDePublico" class="form-label">Cantidad de público</label>
@@ -31,6 +35,8 @@
             </div>
         </div>
         <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-danger m-2" (click)="borrar()">Borrar</button>
+            <button type="button" class="btn btn-outline-danger m-2" (click)="modificar()">Modificar</button>
             <button type="button" class="btn btn-outline-light m-2" (click)="limpiar()">Limpiar</button>
 
             <!-- <button class="btn btn-primary" type="button" >

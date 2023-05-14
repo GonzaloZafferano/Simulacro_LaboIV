@@ -20,11 +20,18 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { TablaPaisesComponent } from './components/tabla-paises/tabla-paises.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http'; //PARA USAR HTTP. El uso esta en tabla-paises
+import { HttpClientModule } from '@angular/common/http';
+import { TablaActorComponent } from './components/tabla-actor/tabla-actor.component';
+import { ActorPeliculaComponent } from './modules/actor/components/actor-pelicula/actor-pelicula.component'; //PARA USAR HTTP. El uso esta en tabla-paises
+import { PeliculasDeActorComponent } from './modules/actor/components/peliculas-de-actor/peliculas-de-actor.component';
+import { DetallesActorComponent } from './modules/actor/components/detalles-actor/detalles-actor.component';
+import { DetallesPaisComponent } from './modules/actor/components/detalles-pais/detalles-pais.component';
+import { AltaActoresComponent } from './modules/actor/pages/alta-actores.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AltaActoresComponent,
     BusquedaComponent,
     BienvenidoComponent,
     PeliculaAltaComponent,
@@ -34,6 +41,11 @@ import { HttpClientModule } from '@angular/common/http'; //PARA USAR HTTP. El us
     TablaPeliculaComponent,
     DetallePeliculaComponent,
     TablaPaisesComponent,
+    TablaActorComponent,
+    ActorPeliculaComponent,
+    PeliculasDeActorComponent,
+    DetallesActorComponent,
+    DetallesPaisComponent
   ],
   imports: [
     BrowserModule,

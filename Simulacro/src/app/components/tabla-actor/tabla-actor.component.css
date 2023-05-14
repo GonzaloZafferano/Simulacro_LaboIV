@@ -7,12 +7,12 @@ p{
     font-size: 1em;
 }
 
-.paises{
+.actores{
     cursor: pointer;
-    width: 96%;
+    width: 240px;
 }
 
-.paises:hover{
+.actores:hover{
     background-color: green !important;
     color: white !important;
     font-weight: bold;    

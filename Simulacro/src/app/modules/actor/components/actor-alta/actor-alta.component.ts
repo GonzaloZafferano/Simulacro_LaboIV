@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Actor } from 'src/app/models/Actor';
 import { Pelicula } from 'src/app/models/Pelicula';
 import { ActoresService } from 'src/app/services/actores/actores.service';
@@ -13,24 +13,17 @@ import Swal from 'sweetalert2';
 export class ActorAltaComponent {
   //Campos de Actor.
   id: string = '';
-  nombre: string = '';
-  apellido: string = '';
-  nacionalidad: string = '';
+  nombre: string = ''; 
   fechaNacimiento: string = '';
   cantidadPeliculas: number = 0;
 
   //Validaciones de actor.
   mensajeNombre: string = '';
-  mensajeApellido: string = '';
-  mensajeNacionalidad: string = '';
+  mensajePais: string = '';
   mensajeFechaNacimiento: string = '';
   mensajeCantidadPeliculas: string = '';
   guardando: boolean = false;
-
-  //foto: string = '';
-  //archivoDeFoto: File;
-  //inputArchivo: any;
-  //mensajeFoto: string = '';
+  @Input() pais :any; 
 
   constructor(private actorService: ActoresService) {
   }
@@ -38,28 +31,10 @@ export class ActorAltaComponent {
   guardar() {
     let errorEnDatos = this.validarInputs();
     if (!errorEnDatos) {
-
-      //LOCAL STORAGE
-      // let peliculas = this.peliculasService.obtenerPeliculas();
-
-      // let ultimoId = peliculas.length > 0 ? Math.max(...peliculas.map(obj => obj.id)) : 0;
-
-      // let pelicula = new Pelicula();
-      // pelicula.id = ++ultimoId;
-      // pelicula.nombre = this.nombre;
-      // pelicula.tipoPelicula = Number(this.tipoPelicula);
-      // pelicula.fechaDeEstreno = new Date(this.fechaEstreno);
-      // pelicula.cantidadPublico = Number(this.cantidadDePublico);
-      // pelicula.rutaFoto = this.foto;
-
-      // peliculas.push(pelicula);
-      // this.peliculasService.cargarPeliculas(peliculas);
-
       //FIRESTORE
       let actor = new Actor();
-      actor.nombre = this.nombre;
-      actor.apellido = this.apellido
-      actor.nacionalidad = this.nacionalidad;
+      actor.nombre = this.nombre;      
+      actor.pais = this.pais;
       actor.fechaNacimiento = new Date(this.fechaNacimiento);
       actor.cantidadPeliculas = Number(this.cantidadPeliculas);
 
@@ -69,7 +44,7 @@ export class ActorAltaComponent {
         .then(x => {
           Swal.fire({
             title: 'Alta exitosa!',
-            text: `Se ha guardado el actor '${actor.nombre} ${actor.apellido}' en la base de datos.`,
+            text: `Se ha guardado el actor '${actor.nombre}' en la base de datos.`,
             icon: 'success',
             timer: 0,
             confirmButtonText: 'Aceptar'
@@ -88,7 +63,6 @@ export class ActorAltaComponent {
             confirmButtonText: 'Aceptar'
           });
           this.guardando = false;
-
         })
     }
   }
@@ -97,30 +71,14 @@ export class ActorAltaComponent {
     if (this.nombre != '')
       this.mensajeNombre = "";
 
-    if (this.apellido != '')
-      this.mensajeApellido = "";
-
-    if (this.nacionalidad != '')
-      this.mensajeNacionalidad = "";
+    if (this.pais != null && this.pais != undefined)
+      this.mensajePais = "";
 
     if (this.cantidadPeliculas != null && this.cantidadPeliculas >= 1)
       this.mensajeCantidadPeliculas = "";
 
     if (this.fechaNacimiento != '')
       this.mensajeFechaNacimiento = "";
-
-    // if (event != null && event.target.matches("[type=file]")) {
-    //   this.inputArchivo = event.target;
-    //   let hayError = this.validarImagen(event);
-    //   if (!hayError) {
-    //     this.obtenerUrlDeImagen(event);
-    //   }
-    //   else
-    //     this.foto = '';
-    // }
-
-    // if (this.foto != '')
-    //   this.mensajeFoto = '';
   }
 
   validarInputs(event: any = null) {
@@ -131,13 +89,8 @@ export class ActorAltaComponent {
       errorEnDatos = true;
     }
 
-    if (this.apellido == '') {
-      this.mensajeApellido = "Debe ingresar un apellido para el actor.";
-      errorEnDatos = true;
-    }
-
-    if (this.nacionalidad == '') {
-      this.mensajeNacionalidad = "Debe ingresar una nacionalidad para el actor.";
+    if (this.pais == null || this.pais == undefined) {
+      this.mensajePais = "Debe ingresar una nacionalidad para el actor.";
       errorEnDatos = true;
     }
 
@@ -151,66 +104,25 @@ export class ActorAltaComponent {
       errorEnDatos = true;
     }
 
-    // if (this.mensajeFoto == '' && this.foto == '') {
-    //   this.mensajeFoto = "Debe seleccionar un archivo para la foto.";
-    //   errorEnDatos = true;
-    // } else if (this.mensajeFoto != '')
-    //   errorEnDatos = true;
-
     return errorEnDatos;
   }
 
-  // validarImagen(event: any) {
-  //   let errorConArchivo = false;
-  //   var nombreArchivo = event.target.value;
-  //   var indicePunto = nombreArchivo.lastIndexOf(".") + 1;
-  //   var extension = nombreArchivo.substr(indicePunto, nombreArchivo.length).toLowerCase();
-  //   if (extension != "jpg" && extension != "jpeg" && extension != "png") {
-  //     this.mensajeFoto = "Solo se admiten archivos de tipo jpg, jpeg.";
-  //     errorConArchivo = true;
-  //   }
-  //   return errorConArchivo;
-  // }
-
-  // obtenerUrlDeImagen(event: any) {
-  //   let file = event.target.files[0];
-  //   let reader = new FileReader();
-
-  //   reader.onload = (e: any) => {     
-  //     this.foto = e.target.result;
-  //     this.mensajeFoto = '';
-  //   };
-  //   reader.readAsDataURL(file);
-  // }
-
   limpiarMensajes() {
     this.mensajeNombre = '';
-    this.mensajeApellido = '';
     this.mensajeFechaNacimiento = '';
     this.mensajeCantidadPeliculas = '';
-    this.mensajeNacionalidad = '';
+    this.mensajePais = '';
   }
 
   limpiarInputs() {
     this.nombre = '';
-    this.apellido = '';
     this.fechaNacimiento = '';
     this.cantidadPeliculas = 0;
-    this.nacionalidad = '';
-
-    // if (this.inputArchivo)
-    //   this.inputArchivo.value = null;
+    this.pais = undefined;
   }
 
   limpiarFormulario() {
     this.limpiarInputs();
     this.limpiarMensajes();
-  }
-
-  tablaPaisesHandler(pais: string) {
-    if (pais != '') {
-      this.nacionalidad = pais;
-      this.mensajeNacionalidad = '';
-    }
   }
 }

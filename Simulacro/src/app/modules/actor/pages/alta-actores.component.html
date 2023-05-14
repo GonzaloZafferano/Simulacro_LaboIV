@@ -1,0 +1,9 @@
+<h2 class="text-center custom-font">Alta de Actores</h2>
+<div class="d-flex justify-content-center">
+    <div class="w-50 m-2">
+        <app-actor-alta [pais]="paisSeleccionado"></app-actor-alta>
+    </div>
+    <div class="w-25 m-2">
+        <app-tabla-paises class="bg-dark" anchoSpinner="width: 100% !important;" estilos="height: 300px !important; width: 100%; overflow-y: auto;" (OnPaisSeleccionado)="tablaPaisesHandler($event)"></app-tabla-paises>
+    </div>
+</div>

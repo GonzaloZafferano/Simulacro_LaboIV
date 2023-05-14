@@ -4,12 +4,10 @@ import { BusquedaRoutingModule } from './busqueda-routing.module';
 
 @NgModule({
   declarations: [  
-
   ],
   imports: [
     CommonModule,
     BusquedaRoutingModule,
-
   ]
 })
 export class BusquedaModule { }
