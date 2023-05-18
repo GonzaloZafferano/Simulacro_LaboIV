@@ -1,47 +1,84 @@
 <div class="container bg-dark text-light">
     <h3 class="text-center">Complete los datos del Actor</h3>
-    <div class="d-flex justify-content-between"> 
+    <div class="d-flex justify-content-between">
         <div class="w-100 m-2">
-            <form class="form-group">
+            <form [formGroup]="form" class="form-group">
+
                 <div>
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" id="nombre" class="form-control" (input)="inputChange()" name="nombre"
-                        [(ngModel)]="nombre">
-                    <div *ngIf="mensajeNombre !== ''">
-                        <p class="mensaje-error">{{mensajeNombre}}</p>
-                    </div>
+                    <input type="text" id="nombre" class="form-control" name="nombre" formControlName="nombre">
+                    <ng-container *ngIf="nombre?.hasError('campoVacio')">
+                        <small class="d-block text-danger">
+                            {{nombre?.getError('campoVacio').mensaje}}
+                        </small>
+                    </ng-container>
                 </div>
+
                 <div>
                     <label for="nacionalidad" class="form-label">Nacionalidad</label>
-                    <input type="text" id="apellido" disabled class="form-control" (input)="inputChange()" name="nacionalidad"
-                        [value]="pais?.translations?.es">
-                    <div *ngIf="mensajePais !== ''">
-                        <p class="mensaje-error">{{mensajePais}}</p>
-                    </div>
+                    <input type="text" id="apellido" readonly class="form-control" formControlName="nacionalidad" name="nacionalidad"
+
+                    > 
+                    <!-- [formControl]="pais"   [value]="pais?.translations?.es" -->
+                    <ng-container *ngIf="nacionalidad?.hasError('campoVacio')">
+                        <small class="d-block text-danger">
+                            {{nacionalidad?.getError('campoVacio').mensaje}}
+                        </small>
+                    </ng-container>
                 </div>
+
                 <div>
                     <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-                    <input type="date" id="fechaNacimiento" class="form-control" (input)="inputChange()"
-                        name="fechaNacimiento" [(ngModel)]="fechaNacimiento">
-                    <div *ngIf="mensajeFechaNacimiento !== ''">
-                        <p class="mensaje-error">{{mensajeFechaNacimiento}}</p>
-                    </div>
+                    <input type="date" id="fechaNacimiento" class="form-control" name="fechaNacimiento"
+                    formControlName="fechaNacimiento">
+                    <ng-container *ngIf="fechaNacimiento?.hasError('campoVacio')">
+                        <small class="d-block text-danger">
+                            {{fechaNacimiento?.getError('campoVacio').mensaje}}
+                        </small>
+                    </ng-container>
+                    <ng-container *ngIf="fechaNacimiento?.hasError('formatoInvalido')">
+                        <small class="d-block text-danger">
+                            {{fechaNacimiento?.getError('formatoInvalido').mensaje}}
+                        </small>
+                    </ng-container>
+                    <ng-container *ngIf="fechaNacimiento?.hasError('fechaInvalida')">
+                        <small class="d-block text-danger">
+                            {{fechaNacimiento?.getError('fechaInvalida').mensaje}}
+                        </small>
+                    </ng-container>
                 </div>
+
                 <div>
                     <label for="cantidadPeliculas" class="form-label">Cantidad de películas</label>
-                    <input type="number" id="cantidadPeliculas" (input)="inputChange()" class="form-control"
-                        [(ngModel)]="cantidadPeliculas" name="cantidadPeliculas">
-                    <div *ngIf="mensajeCantidadPeliculas !== ''">
-                        <p class="mensaje-error">{{mensajeCantidadPeliculas}}</p>
-                    </div>
-                </div>           
-                <div class="d-flex justify-content-between">
-                    <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2" (click)="limpiarFormulario()">Limpiar</button>
-                    <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2" (click)="guardar()">Guardar
-                        <span [hidden]="!guardando" class="spinner-border spinner-border-sm"></span>
-                    </button>         
+                    <input type="number" id="cantidadPeliculas" class="form-control" formControlName="cantidadPeliculas"
+                        name="cantidadPeliculas">
+                    <ng-container *ngIf="cantidadPeliculas?.hasError('campoVacio')">
+                        <small class="d-block text-danger">
+                            {{cantidadPeliculas?.getError('campoVacio').mensaje}}
+                        </small>
+                    </ng-container>
+                    <ng-container *ngIf="cantidadPeliculas?.hasError('textoInvalido')">
+                        <small class="d-block text-danger">
+                            {{cantidadPeliculas?.getError('textoInvalido').mensaje}}
+                        </small>
+                    </ng-container>
+                    <ng-container *ngIf="cantidadPeliculas?.hasError('valorInvalido')">
+                        <small class="d-block text-danger">
+                            {{cantidadPeliculas?.getError('valorInvalido').mensaje}}
+                        </small>
+                    </ng-container>
                 </div>
+
+                <div class="d-flex justify-content-between">
+                    <button [disabled]="guardando" type="button" class="btn btn-outline-light m-2"
+                        (click)="limpiarFormulario()">Limpiar</button>
+                    <button [disabled]="guardando || form.invalid" type="button" class="btn btn-outline-light m-2"
+                        (click)="guardar()">Guardar
+                        <span [hidden]="!guardando" class="spinner-border spinner-border-sm"></span>
+                    </button>
+                </div>
+
             </form>
-        </div>       
+        </div>
     </div>
 </div>

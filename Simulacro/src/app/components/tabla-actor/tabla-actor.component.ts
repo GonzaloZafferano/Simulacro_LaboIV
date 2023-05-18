@@ -9,18 +9,25 @@ import { ActoresService } from 'src/app/services/actores/actores.service';
 })
 export class TablaActorComponent {
   constructor(private actorService: ActoresService) { }
+  spinner: boolean = false;
+  anchoSpinner: string = '';
   @Output() OnActorSeleccionado = new EventEmitter<Actor>();
   @Input() estilos: any;
   actores: any[];
   async ngOnInit() {
+    this.spinner = true;
     let actores = await this.actorService.obtenerListaDeActoresDB();
-    this.actores = actores.sort((x,y)=>{
-      if (x['nombre'].toLowerCase() < y['nombre'].toLowerCase()) 
-        return -1;        
-      if (x['nombre'].toLowerCase() > y['nombre'].toLowerCase()) 
-        return 1;        
+    this.actores = actores.sort((x, y) => {
+      if (x['nombre'] != null && x['nombre'] != undefined &&
+        y['nombre'] != null && x['nombre'] != undefined) {
+        if (x['nombre'].toLowerCase() < y['nombre'].toLowerCase())
+          return -1;
+        if (x['nombre'].toLowerCase() > y['nombre'].toLowerCase())
+          return 1;
+      }
       return 0;
-    }); 
+    });
+    this.spinner = false;
   }
 
   actorSeleccionado(actor: Actor) {

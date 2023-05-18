@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Actor } from 'src/app/models/Actor';
 import { Pelicula } from 'src/app/models/Pelicula';
 import { ActoresService } from 'src/app/services/actores/actores.service';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { validarCampoCadena, validarCampoFecha, validarCampoSelect, validarCampoArchivo, validarCampoNumero } from 'src/app/validaciones/validaciones';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,47 +13,72 @@ import Swal from 'sweetalert2';
   styleUrls: ['./actor-alta.component.css']
 })
 export class ActorAltaComponent {
-  //Campos de Actor.
-  id: string = '';
-  nombre: string = ''; 
-  fechaNacimiento: string = '';
-  cantidadPeliculas: number = 0;
-
-  //Validaciones de actor.
-  mensajeNombre: string = '';
-  mensajePais: string = '';
-  mensajeFechaNacimiento: string = '';
-  mensajeCantidadPeliculas: string = '';
+  
   guardando: boolean = false;
-  @Input() pais :any; 
+  @Input() pais: any;
+  form!: FormGroup;
 
   constructor(private actorService: ActoresService) {
+    this.validar();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['pais']) {
+      let pais = changes['pais'] as any;
+      if (pais && pais.currentValue)
+        this.nacionalidad = pais.currentValue.translations.es;
+    }
+  }
+
+  public get nombre() {
+    return this.form?.get('nombre');
+  }
+  public set nombre(value: any) {
+    this.form?.get('nombre')?.patchValue(value);
+  }
+
+  get nacionalidad() {
+    return this.form?.get('nacionalidad');
+  }
+  set nacionalidad(value: any) {
+    this.form?.get('nacionalidad')?.patchValue(value);
+  }
+
+  get fechaNacimiento() {
+    return this.form?.get('fechaNacimiento');
+  }
+  set fechaNacimiento(value: any) {
+    this.form?.get('fechaNacimiento')?.patchValue(value);
+  }
+
+  get cantidadPeliculas() {
+    return this.form?.get('cantidadPeliculas');
+  }
+  set cantidadPeliculas(value: any) {
+    this.form?.get('cantidadPeliculas')?.patchValue(value);;
   }
 
   guardar() {
-    let errorEnDatos = this.validarInputs();
-    if (!errorEnDatos) {
-      //FIRESTORE
-      let actor = new Actor();
-      actor.nombre = this.nombre;      
-      actor.pais = this.pais;
-      actor.fechaNacimiento = new Date(this.fechaNacimiento);
-      actor.cantidadPeliculas = Number(this.cantidadPeliculas);
-
+    if (!this.form.invalid) {
       this.guardando = true;
+
+      let actor = new Actor();
+      actor.nombre = this.nombre.value;
+      actor.cantidadPeliculas = Number(this.cantidadPeliculas.value);
+      actor.fechaNacimiento = new Date(this.fechaNacimiento.value.replace('-', '/'));  //Replace para que me tome bien la fecha   
+      actor.pais = this.pais;
 
       this.actorService.cargarActoraDB(actor)
         .then(x => {
           Swal.fire({
             title: 'Alta exitosa!',
-            text: `Se ha guardado el actor '${actor.nombre}' en la base de datos.`,
+            text: `Se ha guardado el actor '${actor.nombre}'`,
             icon: 'success',
             timer: 0,
             confirmButtonText: 'Aceptar'
           });
           this.limpiarFormulario();
           this.guardando = false;
-
         })
         .catch(err => {
           console.log(err);
@@ -67,62 +94,24 @@ export class ActorAltaComponent {
     }
   }
 
-  inputChange(event: any = null) {
-    if (this.nombre != '')
-      this.mensajeNombre = "";
-
-    if (this.pais != null && this.pais != undefined)
-      this.mensajePais = "";
-
-    if (this.cantidadPeliculas != null && this.cantidadPeliculas >= 1)
-      this.mensajeCantidadPeliculas = "";
-
-    if (this.fechaNacimiento != '')
-      this.mensajeFechaNacimiento = "";
-  }
-
-  validarInputs(event: any = null) {
-    let errorEnDatos = false;
-
-    if (this.nombre == '') {
-      this.mensajeNombre = "Debe ingresar un nombre para el actor.";
-      errorEnDatos = true;
-    }
-
-    if (this.pais == null || this.pais == undefined) {
-      this.mensajePais = "Debe ingresar una nacionalidad para el actor.";
-      errorEnDatos = true;
-    }
-
-    if (this.cantidadPeliculas == null || this.cantidadPeliculas < 1) {
-      this.mensajeCantidadPeliculas = "Debe ingresar una cantidad valida para la cantidad de películas.";
-      errorEnDatos = true;
-    }
-
-    if (this.fechaNacimiento == '') {
-      this.mensajeFechaNacimiento = "Debe ingresar una fecha de nacimiento.";
-      errorEnDatos = true;
-    }
-
-    return errorEnDatos;
-  }
-
-  limpiarMensajes() {
-    this.mensajeNombre = '';
-    this.mensajeFechaNacimiento = '';
-    this.mensajeCantidadPeliculas = '';
-    this.mensajePais = '';
-  }
-
-  limpiarInputs() {
-    this.nombre = '';
-    this.fechaNacimiento = '';
-    this.cantidadPeliculas = 0;
-    this.pais = undefined;
-  }
-
   limpiarFormulario() {
-    this.limpiarInputs();
-    this.limpiarMensajes();
+    this.nombre = '';
+    this.pais = null;
+    this.nacionalidad = '';
+    this.cantidadPeliculas = 0;
+    this.fechaNacimiento = null;
+  }
+
+  validar(): void {
+    this.form = new FormGroup
+      (
+        {
+          nombre: new FormControl('', { validators: [validarCampoCadena()] }),
+          cantidadPeliculas: new FormControl('',),
+          fechaNacimiento: new FormControl('', { validators: [validarCampoFecha()] }),
+          nacionalidad: new FormControl('', { validators: [validarCampoCadena()] }),
+        },
+        [validarCampoNumero('cantidadPeliculas')]
+      );
   }
 }

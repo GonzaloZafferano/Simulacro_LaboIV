@@ -27,6 +27,7 @@ import { PeliculasDeActorComponent } from './modules/actor/components/peliculas-
 import { DetallesActorComponent } from './modules/actor/components/detalles-actor/detalles-actor.component';
 import { DetallesPaisComponent } from './modules/actor/components/detalles-pais/detalles-pais.component';
 import { AltaActoresComponent } from './modules/actor/pages/alta-actores.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,8 @@ import { AltaActoresComponent } from './modules/actor/pages/alta-actores.compone
     FormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     HttpClientModule //PARA USAR HTTP. El uso esta en tabla-paises

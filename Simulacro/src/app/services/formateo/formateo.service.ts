@@ -13,7 +13,7 @@ export class FormateoService {
     if(fecha){
       let fechaDate = fecha.toDate();// new Date(fecha);
     
-      let dia = fechaDate.getDate() + 1;
+      let dia = fechaDate.getDate();
       let mes = fechaDate.getMonth() + 1;
       let anio = fechaDate.getFullYear();
   

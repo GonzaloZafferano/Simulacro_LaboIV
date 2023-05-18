@@ -1,6 +1,10 @@
 <div>
     <h3>Lista de Actores</h3>
-    <!-- <div style="height: 400px !important; overflow-y: scroll;"> -->
+    <div *ngIf="spinner; else lista" class="d-flex justify-content-around" [style]="anchoSpinner">
+        <span class="fs-3 fw-bold" >Cargando...</span>
+        <div class="spinner-border text-danger text-center" style="align-self: center; scale: 1.2;"></div>
+    </div>
+    <ng-template #lista>
         <div [style]="estilos">
         <div *ngFor="let actor of actores" style="width: 100%;">
             <div class="actores border bg-light text-dark p-0 m-1" style="height: 55px; border-radius: 10px; width: 95%;"
@@ -13,4 +17,5 @@
             </div>
         </div>
     </div>
+</ng-template>
 </div>
